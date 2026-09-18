@@ -26,25 +26,36 @@ Open **Modules** in OstojaOS core 0.2.1 or later and click the install or update
 - Clients must use a separately trusted, pinned public key; downloading a key from this site does not establish trust. `ostojaos-local` is the existing key identifier trusted by the initial OstojaOS deployment, retained for compatibility.
 - A client must verify catalog signature, compatibility, archive length and SHA256, manifest signature, and every payload hash before installation. Registry metadata alone must never authorize installation or execution. Freshness and rollback policy must be handled by the future client.
 
-## Publish a new release
+## Source repositories and automated releases
 
-Build and sign the module using the module packaging tools in the source workspace. Keep the private Ed25519 key offline; GitHub Actions receives no signing secrets.
+- [Files](https://github.com/OstojaOS/module-files)
+- [Terminal](https://github.com/OstojaOS/module-terminal)
+- [Cloud Sync](https://github.com/OstojaOS/module-cloud-sync)
+- [Shared SDK](https://github.com/OstojaOS/module-sdk)
+
+Update a module's manifest/package version and push `vX.Y.Z`. Its ARM64 CI tests
+and builds the source and publishes an immutable release with an unsigned payload.
+The **Import module releases** workflow checks these repositories every 15 minutes
+(GitHub scheduling can be delayed) or on manual dispatch. It verifies the source
+release and payload hashes, signs installable archives with `ostojaos-ci`, publishes
+immutable registry releases, verifies all public catalog assets, then creates and
+merges a catalog PR through the required `validate` status and dispatches Pages.
+No source payload code is executed by the signing job.
+
+The new signing key is a secret available only in this repository. The existing
+local signing key remains offline. Clients must trust the new public key through
+a core update before automated catalogs are published. Downloading a catalog does
+not establish key trust. Existing local-key releases remain valid.
+
+Publication is serialized and retryable. Published archives are verified and reused,
+never overwritten. Existing entries are retained. Concurrent manual changes to the
+catalog cause a safe retry. CI uses pinned action commits and lockfiles.
 
 ```sh
-python3 scripts/registry.py import-release /path/to/module-0.3.0-arm64.ostojaos
-python3 scripts/registry.py sign --key /secure/path/module-signing-key.pem
 python3 -m unittest discover -s tests -v
-python3 scripts/registry.py verify
-```
-
-Create a draft GitHub Release tagged `<module-id>-v<version>`, upload the exact archive referenced in the new entry, then publish the release. Immutable releases are enabled. Only then merge the signed catalog update. Existing version entries and release assets must never be replaced; publish a new version instead. A future per-module repository can be selected with `import-release --repository OstojaOS/<repository>`.
-
-```sh
 python3 scripts/registry.py verify --online
-python3 scripts/registry.py build --online
+gh workflow run import.yml --repo OstojaOS/module-registry
 ```
-
-CI checks signatures, payload hashes, actual public downloads, catalog consistency and tests before deploying GitHub Pages. Action versions are pinned to commit SHAs. Pull requests cannot deploy; normal publication uses the main branch. Module compilation is separate from registry publication.
 
 ## License
 
