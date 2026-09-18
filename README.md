@@ -6,7 +6,7 @@ This repository publishes a signed catalog and versioned ARM64 module packages. 
 
 ## Available modules
 
-- **Files 0.2.1** — file manager, folder trees, removable devices and file operations.
+- **Files 0.2.2** — file manager, folder trees, removable devices and file operations.
 - **Terminal 0.2.1** — interactive system-user terminal with administrator permission checks.
 
 Files and Terminal require core `>=0.2.0,<0.3.0`, module API 1 and ARM64. OS package requirements are included in each signed manifest. Version 0.2.1 adds distribution notices and explicit native runtime dependencies; it does not require a core upgrade from 0.2.0.
