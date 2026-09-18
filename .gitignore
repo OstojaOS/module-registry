@@ -1,0 +1,7 @@
+/site/
+/__pycache__/
+**/__pycache__/
+*.pyc
+*.ostojaos
+.env*
+/codex-session
