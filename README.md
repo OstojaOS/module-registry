@@ -6,12 +6,12 @@ This repository publishes a signed catalog and versioned ARM64 module packages. 
 
 ## Available modules
 
-- **Files 0.2.8** — file manager, folder trees, removable devices and file operations.
-- **Terminal 0.2.1** — interactive system-user terminal with administrator permission checks.
+- **Files** — file manager, folder trees, removable devices and file operations.
+- **Terminal** — interactive system-user terminal with administrator permission checks.
 
 Files and Terminal require core `>=0.2.0,<0.3.0`, module API 1 and ARM64. OS package requirements are included in each signed manifest. Version 0.2.1 adds distribution notices and explicit native runtime dependencies; it does not require a core upgrade from 0.2.0.
 
-**Cloud Sync 0.1.2 (prototype)** — multiple Google Drive and Dropbox connections, local authorization helper, per-user SQLite state, pause/retry and task history. Requires core `>=0.2.1,<0.3.0`, ARM64, Python 3 and rclone (installed from OS packages). Upload/download modes preserve deletions and keep replaced destination versions; initial two-way sync requires one empty folder and retains rclone safety limits. Inotify and cloud change cursors avoid recurring local scans while idle. Actual provider access requires user authorization. OneDrive and Synology Drive are not included yet.
+**Cloud Sync (prototype)** — multiple Google Drive and Dropbox connections, local authorization helper, per-user SQLite state, pause/retry and task history. Requires core `>=0.2.1,<0.3.0`, ARM64, Python 3 and rclone (installed from OS packages). Upload/download modes preserve deletions and keep replaced destination versions; initial two-way sync requires one empty folder and retains rclone safety limits. Inotify and cloud change cursors avoid recurring local scans while idle. Actual provider access requires user authorization. OneDrive and Synology Drive are not included yet.
 
 ## Install
 
@@ -41,6 +41,8 @@ release and payload hashes, signs installable archives with `ostojaos-ci`, publi
 immutable registry releases, verifies all public catalog assets, then creates and
 merges a catalog PR through the required `validate` status and dispatches Pages.
 No source payload code is executed by the signing job.
+The `CI_PUBLISHING_ENABLED` repository variable gates publication until client key
+rollout is complete; set it to `true` only after trusted-key deployment.
 
 The new signing key is a secret available only in this repository. The existing
 local signing key remains offline. Clients must trust the new public key through
