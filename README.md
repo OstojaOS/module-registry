@@ -2,7 +2,7 @@
 
 Official catalog: **https://ostojaos.github.io/module-registry/**
 
-This repository publishes a signed catalog and versioned ARM64 module packages. It does not contain the OstojaOS core source or private signing keys. The current panel supports installation from a downloaded `.ostojaos` archive; an in-panel internet catalog client is a separate integration.
+This repository publishes a signed catalog and versioned ARM64 module packages. It does not contain the OstojaOS core source or private signing keys. OstojaOS core 0.2.1 and later lists this catalog in the Modules panel and supports installation and updates with one click. Installation from a downloaded `.ostojaos` archive is also available.
 
 ## Available modules
 
@@ -13,7 +13,7 @@ Both require core `>=0.2.0,<0.3.0`, module API 1 and ARM64. OS package requireme
 
 ## Install
 
-Download the appropriate release archive from the catalog, then upload it in **Modules** in OstojaOS. The core checks module signatures, payload hashes, API/core compatibility, architecture and dependencies. Never install packages from an untrusted signer.
+Open **Modules** in OstojaOS core 0.2.1 or later and click the install or update icon. Alternatively, download the appropriate release archive from the catalog and upload it in **Modules**. The core checks module signatures, payload hashes, API/core compatibility, architecture and dependencies. Never install packages from an untrusted signer.
 
 ## Catalog protocol
 
