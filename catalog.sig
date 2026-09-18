@@ -1,1 +1,1 @@
-{"algorithm":"Ed25519","signature":"Mwf2PoccC+Kgrw15FyRFNhYUyNxA0SJAZnCjdLlf+wawxsOKiiHAm9dYo/LieQs8L331UAMtaKE56qH62/s5BQ==","signer":"ostojaos-local"}
+{"algorithm":"Ed25519","signature":"djHo6wPlJRuTMDF4zP06ao2UitmsZzMk9zbnWkRijzAnycJh1Xh2ARZVzeFkokjbs8uh1CCvomOdqEscxDNFDQ==","signer":"ostojaos-local"}
